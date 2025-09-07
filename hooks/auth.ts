@@ -18,7 +18,7 @@ export const useLoginMutation = () => {
     onSuccess: (data) => {
       // Store token in cookie
       Cookies.set("MSAR-TOKEN", data.token, {
-        httpOnly: false,
+        httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict" as const,
         expires: 7, // HARDCODED: 7 days
