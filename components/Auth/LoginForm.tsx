@@ -33,7 +33,9 @@ export default function LoginForm() {
     } catch (error) {
       if (error instanceof Error && error.name === "ZodError") {
         // Handle Zod validation errors
-        const zodError = error as { issues?: Array<{ path: string[]; message: string }> };
+        const zodError = error as {
+          issues?: Array<{ path: string[]; message: string }>;
+        };
         const newErrors: { email?: string; password?: string } = {};
         zodError.issues?.forEach((issue) => {
           if (issue.path[0] === "email") {

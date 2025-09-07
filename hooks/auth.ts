@@ -16,9 +16,8 @@ export const useLoginMutation = () => {
   >({
     mutationFn: login,
     onSuccess: (data) => {
-      // Store token in cookie
+      // Store token in cookie (removed httpOnly since it can't be set from client-side)
       Cookies.set("MSAR-TOKEN", data.token, {
-        httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict" as const,
         expires: 7, // HARDCODED: 7 days
