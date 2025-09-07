@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { ABeeZee } from "next/font/google";
+import ReactQueryProvider from "@/provider/ReactQueryProvider";
+
 import "./globals.css";
 
 const fonts = ABeeZee({
@@ -19,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${fonts.className} antialiased`}>{children}</body>
+      <body className={`${fonts.className} antialiased`}>
+        <ReactQueryProvider>{children}</ReactQueryProvider>
+      </body>
     </html>
   );
 }
