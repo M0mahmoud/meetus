@@ -113,7 +113,7 @@ export default function LoginForm() {
 
       <button
         type="submit"
-        disabled={isLoading || !isValidEmail(email)}
+        disabled={isLoading || !isValidEmail(email) || !password.trim()}
         className={`px-5 py-3 bg-primary rounded-lg inline-flex justify-center items-center gap-1 w-full text-white border-none transition-all duration-150 ${
           isLoading || !isValidEmail(email)
             ? "opacity-50 cursor-not-allowed"
