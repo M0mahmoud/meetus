@@ -1,9 +1,27 @@
-import { EmailIcon, LockIcon } from "@/assets/icons/auth";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/auth-store";
+import LoginForm from "@/components/Auth/LoginForm";
 
 export default function LoginPage() {
+  const router = useRouter();
+  const { isAuthenticated, initializeAuth } = useAuthStore();
+
+  // Check if user is already authenticated
+  useEffect(() => {
+    initializeAuth();
+  }, [initializeAuth]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/dashboard");
+    }
+  }, [isAuthenticated, router]);
+
   return (
     <div className="w-dvw h-dvh min-h-dvh relative bg-[#E9ECF2] overflow-hidden">
       <div className="z-0 w-[607px] h-[607px] left-[38px] top-[-372px] absolute opacity-60 bg-violet-400 rounded-full blur-[400px]" />
@@ -23,33 +41,7 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <div className="flex flex-col justify-start items-start gap-5 w-full">
-            <div className="p-4 bg-white/40 border border-white rounded-lg flex justify-start items-center gap-3 w-full">
-              <span>
-                <EmailIcon />
-              </span>
-              <input
-                type="email"
-                placeholder="Email"
-                className="w-full bg-transparent outline-none placeholder:text-secondary text-alt"
-              />
-            </div>
-
-            <div className="p-4 bg-white/40 border border-white rounded-lg flex justify-start items-center gap-3 w-full">
-              <span>
-                <LockIcon />
-              </span>
-              <input
-                type="password"
-                placeholder="Password"
-                className="w-full bg-transparent outline-none placeholder:text-secondary text-alt"
-              />
-            </div>
-          </div>
-
-          <button className="px-5 py-3 bg-primary rounded-lg inline-flex justify-center items-center gap-1 w-full text-white cursor-pointer outline-none border-none hover:brightness-90 active:scale-95 transition-all duration-150">
-            Login
-          </button>
+          <LoginForm />
 
           <div className="text-center justify-start text-secondary text-sm leading-snug">
             Don't have an account?{" "}
