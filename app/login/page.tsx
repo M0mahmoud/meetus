@@ -44,7 +44,7 @@ export default function LoginPage() {
           <LoginForm />
 
           <div className="text-center justify-start text-secondary text-sm leading-snug">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/login" className="hover:underline">
               Sign up
             </Link>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/auth-store";
 import Image from "next/image";
@@ -37,14 +37,7 @@ export default function DashboardPage() {
     }
   }, [data, setUser]);
 
-  // Handle token expiration
-  useEffect(() => {
-    if (error?.status === 401) {
-      handleLogout();
-    }
-  }, [error]);
-
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     try {
       await logoutMutation.mutateAsync();
       storeLogout();
@@ -55,7 +48,14 @@ export default function DashboardPage() {
       storeLogout();
       router.push("/login");
     }
-  };
+  }, [logoutMutation, storeLogout, router]);
+
+  // Handle token expiration
+  useEffect(() => {
+    if (error?.status === 401) {
+      handleLogout();
+    }
+  }, [error, handleLogout]);
 
   if (isPending || (!isAuthenticated && isPending)) {
     return <LoadingSpinner message="Loading dashboard..." />;
